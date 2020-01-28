@@ -30,13 +30,13 @@ functions:
           - ''
           - - "https://"
             - Ref: ApiGatewayRestApi
-            - ".execute-api.#{AWS::Region}.amazonaws.com/${self:provider.stage}/restaurants"
+            - ".execute-api.#{AWS::Region}.amazonaws.com/${self:custom.stage}/restaurants"
       orders_api: 
         Fn::Join:
           - ''
           - - "https://"
             - Ref: ApiGatewayRestApi
-            - ".execute-api.${self:provider.region}.amazonaws.com/${self:provider.stage}/orders"
+            - ".execute-api.${self:provider.region}.amazonaws.com/${self:custom.stage}/orders"
 
   get-restaurants:
     handler: functions/get-restaurants.handler
@@ -120,14 +120,14 @@ resources:
     orderEventsStream:
       Type: AWS::Kinesis::Stream
       Properties: 
-        Name: orders-${self:provider.stage}-${self:custom.name}
+        Name: orders-${self:custom.stage}-${self:custom.name}
         ShardCount: 1
 
     restaurantNotificationTopic:
       Type: AWS::SNS::Topic
       Properties: 
-        DisplayName: restaurants-${self:provider.stage}-${self:custom.name}
-        TopicName: restaurants-${self:provider.stage}-${self:custom.name}
+        DisplayName: restaurants-${self:custom.stage}-${self:custom.name}
+        TopicName: restaurants-${self:custom.stage}-${self:custom.name}
 
     mySubscription:
       Type: AWS::SNS::Subscription
