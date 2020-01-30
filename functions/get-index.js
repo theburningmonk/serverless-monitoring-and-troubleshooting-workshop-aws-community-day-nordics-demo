@@ -1,6 +1,6 @@
 const fs = require("fs")
 const Mustache = require('mustache')
-const http = require('superagent-promise')(require('superagent'), Promise)
+const http = require('axios')
 
 const restaurantsApiRoot = process.env.restaurants_api
 const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
@@ -20,7 +20,7 @@ function loadHtml () {
 
 const getRestaurants = async () => {
   const httpReq = http.get(restaurantsApiRoot)
-  return (await httpReq).body
+  return (await httpReq).data
 }
 
 module.exports.handler = async (event, context) => {
